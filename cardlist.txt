@@ -1,0 +1,5 @@
+210050000 - Elder Entity Kthanid
+210050002 - Forgotten Entity Ngyr Korath
+210050004 - Forgotten Entity Yomagn’tho
+210050005 - Chaos of the Void
+210050007 - 
