@@ -65,7 +65,7 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.negfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and not c:IsDisabled()
+	return (c:IsType(TYPE_EFFECT) or c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsFaceup() and not c:IsDisabled()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
