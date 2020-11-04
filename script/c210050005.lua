@@ -33,7 +33,7 @@ end
 s.listed_names={31677606}
 function s.ovfilter(c,tp,xyzc)
 	local rk=c:GetRank()
-	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>0
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
