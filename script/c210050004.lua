@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b7),aux.FilterBoolFunctionEx(Card.IsSetCard,0x40b7),aux.FilterBoolFunctionEx(Card.IsSetCard,0x20b7))
+	Link.AddProcedure(c,nil,3,nil,s.linkcheck)
 	--opponent cannot activate card/effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(2)
 	c:RegisterEffect(e2)
 	--reflect battle dam
-	local e1=Effect.CreateEffect(c)
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetOperation(s.damop)
@@ -34,6 +34,10 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
+end
+function s.linkcheck(g,lc,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x10b7) and g:IsExists(Card.IsSetCard,1,nil,0x20b7) and 
+		g:IsExists(Card.IsSetCard,1,nil,0x40b7) 
 end
 function s.lim()
 	return Duel.IsBattlePhase()
