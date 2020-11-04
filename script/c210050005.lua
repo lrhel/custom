@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.BreakEffect()
-		local g2=Duel.GetMatchingGroupd(s.negfilter,tp,0,LOCATION_ONFIELD,1,nil)
+		local g2=Duel.GetMatchingGroup(s.negfilter,tp,0,LOCATION_ONFIELD,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local tc=g2:Select(tp,1,1,nil)
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
