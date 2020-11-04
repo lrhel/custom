@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,11,2,s.ovfilter,aux.Stringid(id,0),2)
+	Xyz.AddProcedure(c,nil,11,2,s.ovfilter,aux.Stringid(id,0),2,s.xyzop)
 	c:EnableReviveLimit()
 	--add 1 black and white wave
 	local e1=Effect.CreateEffect(c)
@@ -35,6 +35,11 @@ function s.ovfilter(c,tp,xyzc)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)
 end
+function s.xyzop(e,tp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	return true
+end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
@@ -54,16 +59,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckTarget,e:GetHandler()) end
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.CheckReleaseGroupCost(tp,nil,1,1,false,nil,nil) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,aux.ReleaseCheckTarget,e:GetHandler())
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
 	Duel.Release(g,REASON_COST)
+end
+function s.negfilter(c)
+	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and not c:IsDisabled()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
