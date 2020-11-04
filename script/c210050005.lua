@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.GetMatchingGroup(s.negfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local tc=g2:Select(tp,1,1,nil):GetFirst()
-		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		if tc:IsFaceup() then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
