@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_names={31677606}
+s.listed_series={0x10b7}
 function s.ovfilter(c,tp,xyzc)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>0
