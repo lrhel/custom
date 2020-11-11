@@ -29,6 +29,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--cannot be Xyz material
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+	e3:SetValue(1)
+	c:RegisterEffect(e3)
 end
 s.listed_names={31677606}
 function s.ovfilter(c,tp,xyzc)
