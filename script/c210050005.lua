@@ -83,9 +83,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.CheckReleaseGroupCost(tp,nil,1,1,false,nil,nil) end
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.CheckReleaseGroupCost(tp,nil,1,1,false,nil,e:GetHandler()) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,e:GetHandler())
 	Duel.Release(g,REASON_COST)
 end
 function s.negfilter(c)
